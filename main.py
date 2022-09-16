@@ -6,6 +6,7 @@ from scoreboard import Scoreboard
 
 screen = Screen()
 screen.setup(width=600, height=600)
+screen.title("Turtle Crossing")
 screen.tracer(0)
 screen.listen()
 
@@ -13,21 +14,33 @@ scoreboard = Scoreboard()
 turtle = Player()
 screen.onkey(fun=turtle.move_up, key="Up")
 
-car = CarManager()
+cars = []
+
+for _ in range(10):
+    new_car = CarManager()
+    cars.append(new_car)
+    for car in cars:
+        car.move_car()
+        car.move_car()
 
 game_is_on = True
 while game_is_on:
     time.sleep(0.1)
 
-    car.move_car()
+    for car in cars:
+        car.move_car()
 
     if turtle.ycor() >= FINISH_LINE_Y:
         turtle.restart()
         scoreboard.level_up()
-        car.level_up()
+        new_car = CarManager()
+        cars.append(new_car)
+        for car in cars:
+            car.level_up()
 
-    if -30 <= car.xcor() <= 30 and car.distance(turtle) < 30:
-        game_is_on = False
+    for car in cars:
+        if -30 <= car.xcor() <= 30 and car.distance(turtle) < 30:
+            game_is_on = False
 
     screen.update()
 
