@@ -13,16 +13,26 @@ scoreboard = Scoreboard()
 turtle = Player()
 screen.onkey(fun=turtle.move_up, key="Up")
 
+car = CarManager()
+
 game_is_on = True
 while game_is_on:
     time.sleep(0.1)
 
+    car.move_car()
+
     if turtle.ycor() >= FINISH_LINE_Y:
         turtle.restart()
         scoreboard.level_up()
+        car.level_up()
+
+    if -30 <= car.xcor() <= 30 and car.distance(turtle) < 30:
+        game_is_on = False
 
     screen.update()
 
+scoreboard.game_over()
+screen.exitonclick()
 
 # TODO 1: A turtle moves forwards when you press the "UP key. It can only move forwards, not back left or right
 # TODO 2: Cars are randomly generated along the y-axis and will move from the right edge of the screen to the left edge
