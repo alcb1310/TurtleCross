@@ -9,6 +9,7 @@ screen.setup(width=600, height=600)
 screen.tracer(0)
 screen.listen()
 
+scoreboard = Scoreboard()
 turtle = Player()
 screen.onkey(fun=turtle.move_up, key="Up")
 
@@ -18,6 +19,7 @@ while game_is_on:
 
     if turtle.ycor() >= FINISH_LINE_Y:
         turtle.restart()
+        scoreboard.level_up()
 
     screen.update()
 
